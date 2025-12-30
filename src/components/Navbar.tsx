@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const navLinks = [
   { name: "Pragati", href: "/pragati" },
@@ -23,6 +24,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const { user, logout } = useAuth();
 
   const handleScrollClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith("#") && isHome) {
@@ -74,12 +76,30 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden md:block">
-          <Link to="/auth">
-            <Button variant="outline" className="rounded-full font-mono text-xs tracking-wider">
-              Login / SSO
-            </Button>
-          </Link>
+        <div className="hidden md:flex items-center gap-3">
+          {user ? (
+            <>
+              <span className="font-mono text-xs text-muted-foreground flex items-center gap-2">
+                <User size={14} />
+                {user.name}
+              </span>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="rounded-full font-mono text-xs tracking-wider gap-2"
+                onClick={logout}
+              >
+                <LogOut size={14} />
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Link to="/auth">
+              <Button variant="outline" className="rounded-full font-mono text-xs tracking-wider">
+                Login / SSO
+              </Button>
+            </Link>
+          )}
         </div>
 
         <button
@@ -114,11 +134,31 @@ export default function Navbar() {
                 ))}
               </ul>
               <div className="mt-6 pt-6 border-t border-border/40">
-                <Link to="/auth" onClick={() => setIsOpen(false)}>
-                  <Button variant="outline" className="w-full rounded-full font-mono text-xs tracking-wider">
-                    Login / SSO
-                  </Button>
-                </Link>
+                {user ? (
+                  <div className="space-y-3">
+                    <span className="font-mono text-xs text-muted-foreground flex items-center gap-2">
+                      <User size={14} />
+                      {user.name}
+                    </span>
+                    <Button 
+                      variant="outline" 
+                      className="w-full rounded-full font-mono text-xs tracking-wider gap-2"
+                      onClick={() => {
+                        logout();
+                        setIsOpen(false);
+                      }}
+                    >
+                      <LogOut size={14} />
+                      Logout
+                    </Button>
+                  </div>
+                ) : (
+                  <Link to="/auth" onClick={() => setIsOpen(false)}>
+                    <Button variant="outline" className="w-full rounded-full font-mono text-xs tracking-wider">
+                      Login / SSO
+                    </Button>
+                  </Link>
+                )}
               </div>
             </div>
           </motion.div>

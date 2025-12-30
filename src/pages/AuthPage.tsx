@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, User, ArrowRight, Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { user, login, signup } = useAuth();
+  const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
     name: "",
@@ -18,19 +21,39 @@ export default function AuthPage() {
     password: "",
   });
 
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    let result;
+    if (isLogin) {
+      result = await login(formData.email, formData.password);
+    } else {
+      result = await signup(formData.name, formData.email, formData.password);
+    }
     
-    toast({
-      title: isLogin ? "Welcome back!" : "Account created!",
-      description: isLogin 
-        ? "You've successfully logged in to Vencorp SSO." 
-        : "Please check your email to verify your account.",
-    });
+    if (result.success) {
+      toast({
+        title: isLogin ? "Welcome back!" : "Account created!",
+        description: isLogin 
+          ? "You've successfully logged in to Vencorp SSO." 
+          : "Your account has been created successfully.",
+      });
+      navigate("/");
+    } else {
+      toast({
+        title: "Error",
+        description: result.error,
+        variant: "destructive",
+      });
+    }
     
     setIsLoading(false);
   };
