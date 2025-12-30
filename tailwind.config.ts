@@ -56,6 +56,8 @@ export default {
         edifai: "hsl(var(--edifai))",
         interllexia: "hsl(var(--interllexia))",
         gine: "hsl(var(--gine))",
+        jobportal: "hsl(var(--jobportal))",
+        tezzaract: "hsl(var(--tezzaract))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -73,6 +75,8 @@ export default {
         'glow-edifai': 'var(--shadow-glow-edifai)',
         'glow-interllexia': 'var(--shadow-glow-interllexia)',
         'glow-gine': 'var(--shadow-glow-gine)',
+        'glow-jobportal': 'var(--shadow-glow-jobportal)',
+        'glow-tezzaract': 'var(--shadow-glow-tezzaract)',
       },
       keyframes: {
         "accordion-down": {

@@ -10,6 +10,9 @@ import StelloPage from "./pages/StelloPage";
 import EdifaiPage from "./pages/EdifaiPage";
 import InterllexiaPage from "./pages/InterllexiaPage";
 import GinePage from "./pages/GinePage";
+import JobPortalPage from "./pages/JobPortalPage";
+import TezzaractPage from "./pages/TezzaractPage";
+import AuthPage from "./pages/AuthPage";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +29,9 @@ const App = () => (
           <Route path="/edifai" element={<EdifaiPage />} />
           <Route path="/interllexia" element={<InterllexiaPage />} />
           <Route path="/gine" element={<GinePage />} />
+          <Route path="/job-portal" element={<JobPortalPage />} />
+          <Route path="/tezzaract" element={<TezzaractPage />} />
+          <Route path="/auth" element={<AuthPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

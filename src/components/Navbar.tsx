@@ -73,9 +73,11 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden md:block">
-          <Button variant="outline" className="rounded-full font-mono text-xs tracking-wider">
-            Login / SSO
-          </Button>
+          <Link to="/auth">
+            <Button variant="outline" className="rounded-full font-mono text-xs tracking-wider">
+              Login / SSO
+            </Button>
+          </Link>
         </div>
 
         <button
@@ -110,9 +112,11 @@ export default function Navbar() {
                 ))}
               </ul>
               <div className="mt-6 pt-6 border-t border-border/40">
-                <Button variant="outline" className="w-full rounded-full font-mono text-xs tracking-wider">
-                  Login / SSO
-                </Button>
+                <Link to="/auth" onClick={() => setIsOpen(false)}>
+                  <Button variant="outline" className="w-full rounded-full font-mono text-xs tracking-wider">
+                    Login / SSO
+                  </Button>
+                </Link>
               </div>
             </div>
           </motion.div>
