@@ -87,33 +87,34 @@ export default function Pricing() {
           </p>
         </motion.div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {/* Horizontal scroll on mobile, grid on desktop */}
+        <div className="flex md:grid md:grid-cols-3 gap-6 max-w-5xl mx-auto overflow-x-auto pb-4 md:pb-0 snap-x snap-mandatory scrollbar-hide">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`bento-card relative flex flex-col ${
-                plan.popular ? "border-pragati/50 shadow-glow-pragati" : ""
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              className={`bento-card relative flex flex-col min-w-[300px] md:min-w-0 snap-center ${
+                plan.popular ? "border-pragati/50 shadow-glow-pragati md:scale-105" : ""
               }`}
             >
-              {/* Popular badge */}
+              {/* Popular badge - visible and positioned above card */}
               {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-pragati text-primary-foreground font-mono text-xs px-3 py-1 rounded-full">
-                    MOST POPULAR
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                  <span className="bg-pragati text-white font-mono text-[10px] uppercase tracking-wider px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap">
+                    Most Popular
                   </span>
                 </div>
               )}
 
               {/* Header */}
-              <div className="mb-6">
+              <div className={`mb-6 ${plan.popular ? "pt-2" : ""}`}>
                 <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl bg-muted mb-4 ${plan.accentClass}`}>
                   {plan.icon}
                 </div>
-                <div className="flex items-baseline gap-2">
+                <div className="flex items-baseline gap-2 flex-wrap">
                   <h3 className="text-lg font-bold">{plan.name}</h3>
                   <span className="font-mono text-xs text-muted-foreground">// {plan.tagline}</span>
                 </div>
@@ -130,7 +131,7 @@ export default function Pricing() {
               <ul className="space-y-3 mb-8 flex-1">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <Check size={16} className={`mt-0.5 ${plan.accentClass}`} />
+                    <Check size={16} className={`mt-0.5 flex-shrink-0 ${plan.accentClass}`} />
                     <span className="text-sm text-muted-foreground">{feature}</span>
                   </li>
                 ))}
@@ -144,6 +145,13 @@ export default function Pricing() {
                 {plan.cta}
               </Button>
             </motion.div>
+          ))}
+        </div>
+
+        {/* Scroll hint on mobile */}
+        <div className="flex justify-center gap-2 mt-4 md:hidden">
+          {plans.map((_, i) => (
+            <div key={i} className="w-2 h-2 rounded-full bg-border" />
           ))}
         </div>
       </div>

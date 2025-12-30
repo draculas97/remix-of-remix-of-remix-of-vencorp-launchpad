@@ -1,10 +1,33 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const footerLinks = {
-  Products: ["Pragati", "Stello", "Edifai", "Interllexia", "GINE"],
-  Company: ["About", "Careers", "Press", "Blog"],
-  Resources: ["Documentation", "API Reference", "Status", "Support"],
-  Legal: ["Privacy", "Terms", "Security"],
+  Products: [
+    { name: "Pragati", href: "/pragati" },
+    { name: "Stello", href: "/stello" },
+    { name: "Edifai", href: "/edifai" },
+    { name: "Interllexia", href: "/interllexia" },
+    { name: "GINE", href: "/gine" },
+    { name: "Job Portal", href: "/job-portal" },
+    { name: "Tezzaract", href: "/tezzaract" },
+  ],
+  Company: [
+    { name: "About", href: "#" },
+    { name: "Careers", href: "#" },
+    { name: "Press", href: "#" },
+    { name: "Blog", href: "#" },
+  ],
+  Resources: [
+    { name: "Documentation", href: "#" },
+    { name: "API Reference", href: "#" },
+    { name: "Status", href: "#" },
+    { name: "Support", href: "#" },
+  ],
+  Legal: [
+    { name: "Privacy", href: "#" },
+    { name: "Terms", href: "#" },
+    { name: "Security", href: "#" },
+  ],
 };
 
 export default function Footer() {
@@ -14,11 +37,11 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <div className="mb-4">
-              <span className="font-mono text-xs tracking-[0.3em] text-muted-foreground block mb-1">
+            <div className="mb-4 flex items-center gap-3">
+              <span className="text-xl font-bold tracking-[0.15em]">VENCORP</span>
+              <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground border-l border-border/60 pl-3">
                 BY STACIA
               </span>
-              <span className="text-lg font-bold tracking-[0.2em]">VENCORP</span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               The operating system for innovation. From idea to global scale.
@@ -33,13 +56,22 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3">
                 {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-sm text-foreground/70 hover:text-foreground transition-colors"
-                    >
-                      {link}
-                    </a>
+                  <li key={link.name}>
+                    {link.href.startsWith('/') ? (
+                      <Link
+                        to={link.href}
+                        className="text-sm text-foreground/70 hover:text-foreground transition-colors"
+                      >
+                        {link.name}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        className="text-sm text-foreground/70 hover:text-foreground transition-colors"
+                      >
+                        {link.name}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

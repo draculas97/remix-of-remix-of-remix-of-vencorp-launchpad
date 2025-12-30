@@ -176,7 +176,7 @@ const products = [
     glowClass: "shadow-glow-tezzaract",
     wide: true,
     href: "/tezzaract",
-    externalUrl: "https://tezzaract.thevencorp.com",
+    externalUrl: "https://tezzaract.com",
   },
 ];
 
