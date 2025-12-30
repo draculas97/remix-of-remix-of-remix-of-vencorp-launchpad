@@ -1,6 +1,10 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
+import Testimonials from "@/components/Testimonials";
+import Pricing from "@/components/Pricing";
+import DocumentsSection from "@/components/DocumentsSection";
+import EnquiryForm from "@/components/EnquiryForm";
 import EngineeringSection from "@/components/EngineeringSection";
 import Footer from "@/components/Footer";
 
@@ -11,6 +15,10 @@ export default function Index() {
       <div className="pt-16">
         <Hero />
         <ProductGrid />
+        <Testimonials />
+        <Pricing />
+        <DocumentsSection />
+        <EnquiryForm />
         <EngineeringSection />
         <Footer />
       </div>

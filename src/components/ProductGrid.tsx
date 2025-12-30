@@ -81,7 +81,7 @@ const products = [
   {
     name: "PRAGATI",
     tagline: "The Validator",
-    description: "AI-powered idea validation. 75 parameters. Instant Go/No-Go scoring with strategic categorization.",
+    description: "AI-powered idea validation. 110 parameters. Instant Go/No-Go scoring with strategic categorization.",
     icon: <Brain size={20} />,
     accentClass: "text-pragati",
     glowClass: "shadow-glow-pragati",
@@ -141,7 +141,7 @@ export default function ProductGrid() {
             The Ecosystem
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-3 mb-4">
-            Five modules. One identity.
+            Six modules. One identity.
           </h2>
           <p className="text-muted-foreground">
             Each tool is built to solve a specific problem in the startup journey—but they work together 

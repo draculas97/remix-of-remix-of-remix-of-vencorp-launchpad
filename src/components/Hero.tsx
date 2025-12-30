@@ -73,8 +73,8 @@ export default function Hero() {
             className="flex items-center justify-center gap-8 sm:gap-12 mt-16 pt-8 border-t border-border/40"
           >
             {[
-              { value: "75+", label: "Validation Parameters" },
-              { value: "5", label: "Integrated Modules" },
+              { value: "110", label: "Validation Parameters" },
+              { value: "6", label: "Integrated Modules" },
               { value: "100%", label: "Data-Driven" },
             ].map((stat, i) => (
               <div key={i} className="text-center">
