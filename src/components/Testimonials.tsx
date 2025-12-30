@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { motion, useInView, useAnimationControls } from "framer-motion";
 import { Quote } from "lucide-react";
 
 const testimonials = [
@@ -47,12 +47,35 @@ const testimonials = [
   },
 ];
 
+// Duplicate for seamless loop
+const duplicatedTestimonials = [...testimonials, ...testimonials];
+
 export default function Testimonials() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [isPaused, setIsPaused] = useState(false);
+  const controls = useAnimationControls();
+
+  useEffect(() => {
+    if (!isPaused) {
+      controls.start({
+        x: [0, -50 * testimonials.length + "%"],
+        transition: {
+          x: {
+            repeat: Infinity,
+            repeatType: "loop",
+            duration: 30,
+            ease: "linear",
+          },
+        },
+      });
+    } else {
+      controls.stop();
+    }
+  }, [isPaused, controls]);
 
   return (
-    <section ref={ref} id="testimonials" className="py-24 sm:py-32">
+    <section ref={ref} id="testimonials" className="py-24 sm:py-32 overflow-hidden">
       <div className="container">
         {/* Header */}
         <motion.div
@@ -71,19 +94,35 @@ export default function Testimonials() {
             Founders and investors building the future with the Vencorp ecosystem.
           </p>
         </motion.div>
+      </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {testimonials.map((testimonial, index) => (
+      {/* Marquee container */}
+      <div 
+        className="relative"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {/* Gradient overlays */}
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+
+        {/* Scrolling content */}
+        <motion.div
+          animate={controls}
+          className="flex gap-6 px-6"
+          style={{ width: "fit-content" }}
+        >
+          {duplicatedTestimonials.map((testimonial, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bento-card group"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3) }}
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              className="bento-card group w-[350px] flex-shrink-0"
             >
               {/* Quote icon */}
-              <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl mb-4 ${testimonial.accentColor}`}>
+              <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl mb-4 ${testimonial.accentColor} transition-transform group-hover:scale-110`}>
                 <Quote size={18} />
               </div>
 
@@ -94,7 +133,7 @@ export default function Testimonials() {
 
               {/* Author */}
               <div className="flex items-center gap-3 pt-4 border-t border-border/40">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-full font-mono text-xs font-bold ${testimonial.accentColor}`}>
+                <div className={`flex h-10 w-10 items-center justify-center rounded-full font-mono text-xs font-bold ${testimonial.accentColor} transition-transform group-hover:scale-110`}>
                   {testimonial.avatar}
                 </div>
                 <div>
@@ -104,7 +143,7 @@ export default function Testimonials() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

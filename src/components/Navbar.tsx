@@ -10,6 +10,8 @@ const navLinks = [
   { name: "Edifai", href: "/edifai" },
   { name: "Interllexia", href: "/interllexia" },
   { name: "GINE", href: "/gine" },
+  { name: "Job Portal", href: "/job-portal" },
+  { name: "Tezzaract", href: "/tezzaract" },
 ];
 
 const scrollLinks = [
@@ -43,9 +45,9 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/40"
     >
       <nav className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="font-mono text-xs tracking-[0.3em] text-muted-foreground">BY STACIA</span>
-          <span className="text-lg font-bold tracking-[0.2em]">VENCORP</span>
+        <Link to="/" className="flex items-center gap-3 group">
+          <span className="text-xl font-bold tracking-[0.15em] group-hover:tracking-[0.2em] transition-all">VENCORP</span>
+          <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground border-l border-border/60 pl-3">BY STACIA</span>
         </Link>
 
         <ul className="hidden items-center gap-6 md:flex">
