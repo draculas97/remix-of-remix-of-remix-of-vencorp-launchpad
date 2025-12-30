@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Brain, Server, Sparkles, Users, Globe, ArrowUpRight } from "lucide-react";
+import { Brain, Server, Sparkles, Users, Globe, ArrowUpRight, Briefcase, Box, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 import CountUp from "@/components/CountUp";
 
 interface ProductCardProps {
@@ -13,21 +14,16 @@ interface ProductCardProps {
   score?: number;
   wide?: boolean;
   index: number;
+  href: string;
+  externalUrl?: string;
 }
 
-function ProductCard({ name, tagline, description, icon, accentClass, glowClass, score, wide, index }: ProductCardProps) {
+function ProductCard({ name, tagline, description, icon, accentClass, glowClass, score, wide, index, href, externalUrl }: ProductCardProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -2 }}
-      className={`bento-card group cursor-pointer ${wide ? "md:col-span-2" : ""} hover:${glowClass}`}
-    >
+  const cardContent = (
+    <>
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${accentClass} bg-opacity-10`}>
@@ -44,12 +40,28 @@ function ProductCard({ name, tagline, description, icon, accentClass, glowClass,
 
       {/* Content */}
       <div className="space-y-2">
-        <div className="flex items-baseline gap-2">
+        <div className="flex items-baseline gap-2 flex-wrap">
           <h3 className="text-lg font-bold tracking-tight">{name}</h3>
           <span className="font-mono text-xs text-muted-foreground tracking-wider">// {tagline}</span>
         </div>
         <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
       </div>
+
+      {/* External URL */}
+      {externalUrl && (
+        <div className="mt-4 pt-4 border-t border-border/40">
+          <a
+            href={externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className={`inline-flex items-center gap-2 font-mono text-xs ${accentClass} hover:underline`}
+          >
+            <ExternalLink size={12} />
+            Try {name.charAt(0) + name.slice(1).toLowerCase()}
+          </a>
+        </div>
+      )}
 
       {/* Score display for Pragati */}
       {score !== undefined && (
@@ -73,6 +85,21 @@ function ProductCard({ name, tagline, description, icon, accentClass, glowClass,
           </div>
         </div>
       )}
+    </>
+  );
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ y: -2 }}
+      className={`bento-card group cursor-pointer ${wide ? "md:col-span-2" : ""} hover:${glowClass}`}
+    >
+      <Link to={href} className="block">
+        {cardContent}
+      </Link>
     </motion.div>
   );
 }
@@ -87,6 +114,8 @@ const products = [
     glowClass: "shadow-glow-pragati",
     score: 87,
     wide: true,
+    href: "/pragati",
+    externalUrl: "https://pragati.thevencorp.com",
   },
   {
     name: "STELLO",
@@ -95,6 +124,8 @@ const products = [
     icon: <Server size={20} />,
     accentClass: "text-stello",
     glowClass: "shadow-glow-stello",
+    href: "/stello",
+    externalUrl: "https://stello.thevencorp.com",
   },
   {
     name: "EDIFAI",
@@ -103,6 +134,8 @@ const products = [
     icon: <Sparkles size={20} />,
     accentClass: "text-edifai",
     glowClass: "shadow-glow-edifai",
+    href: "/edifai",
+    externalUrl: "https://edifai.thevencorp.com",
   },
   {
     name: "INTERLLEXIA",
@@ -111,6 +144,18 @@ const products = [
     icon: <Users size={20} />,
     accentClass: "text-interllexia",
     glowClass: "shadow-glow-interllexia",
+    href: "/interllexia",
+    externalUrl: "https://interllexia.thevencorp.com",
+  },
+  {
+    name: "JOB PORTAL",
+    tagline: "The Talent Network",
+    description: "An exclusive job platform connecting Vencorp-backed startups with vetted, top-tier talent sourced from our network of academic partners.",
+    icon: <Briefcase size={20} />,
+    accentClass: "text-jobportal",
+    glowClass: "shadow-glow-jobportal",
+    href: "/job-portal",
+    externalUrl: "https://jobs.thevencorp.com",
   },
   {
     name: "GINE",
@@ -119,7 +164,19 @@ const products = [
     icon: <Globe size={20} />,
     accentClass: "text-gine",
     glowClass: "shadow-glow-gine",
+    href: "/gine",
+    externalUrl: "https://gine.thevencorp.com",
+  },
+  {
+    name: "TEZZARACT",
+    tagline: "The Dimension",
+    description: "Where imagination meets dimension. 5000+ 3D products marketplace for custom designs and innovation in every dimension.",
+    icon: <Box size={20} />,
+    accentClass: "text-tezzaract",
+    glowClass: "shadow-glow-tezzaract",
     wide: true,
+    href: "/tezzaract",
+    externalUrl: "https://tezzaract.thevencorp.com",
   },
 ];
 
@@ -141,7 +198,7 @@ export default function ProductGrid() {
             The Ecosystem
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-3 mb-4">
-            Six modules. One identity.
+            Seven modules. One identity.
           </h2>
           <p className="text-muted-foreground">
             Each tool is built to solve a specific problem in the startup journey—but they work together 

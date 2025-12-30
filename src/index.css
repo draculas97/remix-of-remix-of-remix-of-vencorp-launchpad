@@ -36,11 +36,13 @@
     --radius: 0.75rem;
     
     /* Product accent colors */
-    --pragati: 145 100% 45%;
+    --pragati: 262 100% 56%;
     --stello: 217 100% 58%;
-    --edifai: 262 100% 56%;
+    --edifai: 145 100% 45%;
     --interllexia: 24 100% 50%;
     --gine: 51 100% 50%;
+    --jobportal: 200 100% 50%;
+    --tezzaract: 280 100% 60%;
     
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.03);
@@ -51,6 +53,8 @@
     --shadow-glow-edifai: 0 0 30px hsl(var(--edifai) / 0.15);
     --shadow-glow-interllexia: 0 0 30px hsl(var(--interllexia) / 0.15);
     --shadow-glow-gine: 0 0 30px hsl(var(--gine) / 0.15);
+    --shadow-glow-jobportal: 0 0 30px hsl(var(--jobportal) / 0.15);
+    --shadow-glow-tezzaract: 0 0 30px hsl(var(--tezzaract) / 0.15);
   }
 
   .dark {

@@ -74,7 +74,7 @@ export default function Hero() {
           >
             {[
               { value: "110", label: "Validation Parameters" },
-              { value: "6", label: "Integrated Modules" },
+              { value: "7", label: "Integrated Modules" },
               { value: "100%", label: "Data-Driven" },
             ].map((stat, i) => (
               <div key={i} className="text-center">
