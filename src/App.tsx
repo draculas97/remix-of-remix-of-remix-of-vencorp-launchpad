@@ -14,6 +14,14 @@ import GinePage from "./pages/GinePage";
 import JobPortalPage from "./pages/JobPortalPage";
 import TezzaractPage from "./pages/TezzaractPage";
 import AuthPage from "./pages/AuthPage";
+import AboutPage from "./pages/AboutPage";
+import CareersPage from "./pages/CareersPage";
+import PressPage from "./pages/PressPage";
+import BlogPage from "./pages/BlogPage";
+import DocumentationPage from "./pages/DocumentationPage";
+import ApiReferencePage from "./pages/ApiReferencePage";
+import StatusPage from "./pages/StatusPage";
+import SupportPage from "./pages/SupportPage";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +42,14 @@ const App = () => (
             <Route path="/job-portal" element={<JobPortalPage />} />
             <Route path="/tezzaract" element={<TezzaractPage />} />
             <Route path="/auth" element={<AuthPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/press" element={<PressPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/documentation" element={<DocumentationPage />} />
+            <Route path="/api-reference" element={<ApiReferencePage />} />
+            <Route path="/status" element={<StatusPage />} />
+            <Route path="/support" element={<SupportPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

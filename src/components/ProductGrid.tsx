@@ -63,28 +63,6 @@ function ProductCard({ name, tagline, description, icon, accentClass, glowClass,
         </div>
       )}
 
-      {/* Score display for Pragati */}
-      {score !== undefined && (
-        <div className="mt-6 p-4 rounded-xl bg-muted/50 border border-border/40">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-xs text-muted-foreground tracking-wider uppercase">Validation Score</span>
-            <div className="flex items-baseline gap-1">
-              <span className="text-3xl font-bold text-pragati">
-                <CountUp end={score} isInView={isInView} />
-              </span>
-              <span className="text-sm text-muted-foreground">/100</span>
-            </div>
-          </div>
-          <div className="mt-3 h-1.5 w-full rounded-full bg-border overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={isInView ? { width: `${score}%` } : { width: 0 }}
-              transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-              className="h-full rounded-full bg-pragati"
-            />
-          </div>
-        </div>
-      )}
     </>
   );
 
@@ -112,7 +90,6 @@ const products = [
     icon: <Brain size={20} />,
     accentClass: "text-pragati",
     glowClass: "shadow-glow-pragati",
-    score: 87,
     wide: true,
     href: "/pragati",
     externalUrl: "https://pragati.thevencorp.com",
@@ -174,9 +151,19 @@ const products = [
     icon: <Box size={20} />,
     accentClass: "text-tezzaract",
     glowClass: "shadow-glow-tezzaract",
-    wide: true,
     href: "/tezzaract",
     externalUrl: "https://tezzaract.com",
+  },
+  {
+    name: "BUILT BY STACIA",
+    tagline: "Premium Websites",
+    description: "Ultra-fast 2-day delivery. Premium UI/UX. Hand-crafted, visually intelligent websites built by Stacia Corp.",
+    icon: <Box size={20} />,
+    accentClass: "text-destructive",
+    glowClass: "shadow-glow-pragati",
+    wide: true,
+    href: "/built-by-stacia",
+    externalUrl: "https://builtbystacia.com",
   },
 ];
 
