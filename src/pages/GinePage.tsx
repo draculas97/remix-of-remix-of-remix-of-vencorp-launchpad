@@ -1,11 +1,9 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Globe, Shield, FileCheck, Folder, TrendingUp, Lock } from "lucide-react";
+import { ArrowLeft, Globe, Shield, FileCheck, Folder, TrendingUp, Lock, ArrowRight, DollarSign, Award, Building2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useRef } from "react";
-import { useInView } from "framer-motion";
 
 const features = [
   {
@@ -26,36 +24,27 @@ const features = [
 ];
 
 const listings = [
-  {
-    name: "CleanTech AI",
-    sector: "Energy",
-    score: 94,
-    status: "Active",
-  },
-  {
-    name: "MedFlow Systems",
-    sector: "Healthcare",
-    score: 91,
-    status: "In DD",
-  },
-  {
-    name: "AgriData Pro",
-    sector: "Agriculture",
-    score: 88,
-    status: "Active",
-  },
-  {
-    name: "FinSecure",
-    sector: "FinTech",
-    score: 96,
-    status: "Acquired",
-  },
+  { name: "CleanTech AI", sector: "Energy", score: 94, status: "Active", raised: "$2.5M" },
+  { name: "MedFlow Systems", sector: "Healthcare", score: 91, status: "In DD", raised: "$1.8M" },
+  { name: "AgriData Pro", sector: "Agriculture", score: 88, status: "Active", raised: "$950K" },
+  { name: "FinSecure", sector: "FinTech", score: 96, status: "Acquired", raised: "$4.2M" },
+  { name: "EduNext", sector: "EdTech", score: 89, status: "Active", raised: "$1.2M" },
+];
+
+const stats = [
+  { value: "$50M+", label: "Total Deal Flow" },
+  { value: "150+", label: "Listed Startups" },
+  { value: "45", label: "Successful Exits" },
+  { value: "200+", label: "Active Investors" },
+];
+
+const investorTypes = [
+  { icon: <Building2 size={24} />, title: "Global Capability Centers", desc: "Fortune 500 innovation arms seeking acquisition targets" },
+  { icon: <DollarSign size={24} />, title: "Venture Capital", desc: "Series A/B investors looking for validated opportunities" },
+  { icon: <Award size={24} />, title: "Strategic Partners", desc: "Industry leaders seeking technology licensing deals" },
 ];
 
 export default function GinePage() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
     <main className="min-h-screen bg-foreground text-background">
       <Navbar />
@@ -69,8 +58,8 @@ export default function GinePage() {
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gine/10 rounded-full blur-3xl" />
           
           <div className="container relative z-10">
-            <Link to="/" className="inline-flex items-center gap-2 text-background/60 hover:text-background transition-colors mb-8">
-              <ArrowLeft size={16} />
+            <Link to="/" className="inline-flex items-center gap-2 text-background/60 hover:text-background transition-colors mb-8 group">
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
               <span className="font-mono text-xs uppercase tracking-wider">Back to Home</span>
             </Link>
 
@@ -96,9 +85,10 @@ export default function GinePage() {
                 The world's exclusive marketplace for validated IP. We connect "Green-lit" Vencorp startups directly with Global Capability Centers (GCCs) and investors for licensing, acquisition, or strategic partnership.
               </p>
 
-              <div className="flex items-center gap-4">
-                <Button size="lg" className="rounded-full px-8 gap-2 bg-gine hover:bg-gine/90 text-foreground">
+              <div className="flex flex-wrap items-center gap-4">
+                <Button size="lg" className="rounded-full px-8 gap-2 bg-gine hover:bg-gine/90 text-foreground group">
                   View Deal Flow
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <div className="flex items-center gap-2 text-background/50">
                   <Lock size={14} />
@@ -109,19 +99,55 @@ export default function GinePage() {
           </div>
         </section>
 
-        {/* Features Grid */}
-        <section ref={ref} className="py-24 sm:py-32 bg-background/5">
+        {/* Stats */}
+        <section className="py-12 border-y border-background/10">
           <div className="container">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="text-3xl sm:text-4xl font-bold text-gine mb-1">{stat.value}</div>
+                  <div className="text-sm text-background/60">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Features Grid */}
+        <section className="py-24 sm:py-32 bg-background/5">
+          <div className="container">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-2xl mx-auto mb-16"
+            >
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                The Premium Marketplace
+              </h2>
+              <p className="text-background/60">
+                Where validated innovation meets strategic capital
+              </p>
+            </motion.div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {features.map((feature, index) => (
                 <motion.div
                   key={feature.title}
                   initial={{ opacity: 0, y: 30 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="p-6 rounded-2xl border border-background/10 bg-background/5"
+                  className="p-6 rounded-2xl border border-background/10 bg-background/5 hover:border-gine/30 transition-colors group"
                 >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gine/10 text-gine mb-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gine/10 text-gine mb-4 group-hover:scale-110 transition-transform">
                     {feature.icon}
                   </div>
                   <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
@@ -132,8 +158,46 @@ export default function GinePage() {
           </div>
         </section>
 
-        {/* Live Listings - Terminal Style */}
+        {/* Investor Types */}
         <section className="py-24 sm:py-32">
+          <div className="container">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-2xl mx-auto mb-16"
+            >
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                Who's Buying?
+              </h2>
+              <p className="text-background/60">
+                GINE connects you with the right strategic partners
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {investorTypes.map((type, index) => (
+                <motion.div
+                  key={type.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="p-6 rounded-2xl border border-background/10 bg-background/5 text-center"
+                >
+                  <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gine/10 text-gine mx-auto mb-4">
+                    {type.icon}
+                  </div>
+                  <h3 className="font-bold mb-2">{type.title}</h3>
+                  <p className="text-sm text-background/60">{type.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Live Listings - Terminal Style */}
+        <section className="py-24 sm:py-32 bg-background/5">
           <div className="container">
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center justify-between mb-8">
@@ -154,10 +218,11 @@ export default function GinePage() {
               {/* Terminal-style table */}
               <div className="rounded-xl border border-background/10 bg-background/5 overflow-hidden">
                 {/* Header */}
-                <div className="grid grid-cols-4 gap-4 p-4 border-b border-background/10 font-mono text-xs text-background/50 uppercase tracking-wider">
+                <div className="grid grid-cols-5 gap-4 p-4 border-b border-background/10 font-mono text-xs text-background/50 uppercase tracking-wider">
                   <span>Company</span>
                   <span>Sector</span>
                   <span>Score</span>
+                  <span>Raised</span>
                   <span>Status</span>
                 </div>
                 {/* Rows */}
@@ -168,11 +233,12 @@ export default function GinePage() {
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className="grid grid-cols-4 gap-4 p-4 border-b border-background/5 hover:bg-background/5 transition-colors cursor-pointer"
+                    className="grid grid-cols-5 gap-4 p-4 border-b border-background/5 hover:bg-background/5 transition-colors cursor-pointer"
                   >
                     <span className="font-medium">{listing.name}</span>
                     <span className="text-background/70">{listing.sector}</span>
                     <span className="font-mono text-gine">{listing.score}/100</span>
+                    <span className="font-mono text-background/70">{listing.raised}</span>
                     <span className={`font-mono text-xs ${
                       listing.status === "Acquired" ? "text-pragati" :
                       listing.status === "In DD" ? "text-interllexia" :
@@ -195,7 +261,12 @@ export default function GinePage() {
                 The Exit Strategy
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                <div className="p-6 rounded-xl border border-border/60 bg-card">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="p-6 rounded-xl border border-border/60 bg-card"
+                >
                   <div className="flex items-center gap-2 mb-3">
                     <TrendingUp size={18} className="text-pragati" />
                     <span className="font-mono text-xs uppercase tracking-wider">Powered by Pragati</span>
@@ -203,8 +274,14 @@ export default function GinePage() {
                   <p className="text-sm text-muted-foreground">
                     The moment a startup hits the "Hall of Fame" score, it becomes visible on the GINE ticker.
                   </p>
-                </div>
-                <div className="p-6 rounded-xl border border-border/60 bg-card">
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                  className="p-6 rounded-xl border border-border/60 bg-card"
+                >
                   <div className="flex items-center gap-2 mb-3">
                     <FileCheck size={18} className="text-gine" />
                     <span className="font-mono text-xs uppercase tracking-wider">Powered by Stacia</span>
@@ -212,11 +289,12 @@ export default function GinePage() {
                   <p className="text-sm text-muted-foreground">
                     Corporate buyers can view the 3D CAD models and "Digital Twin" data of your product directly within the GINE interface.
                   </p>
-                </div>
+                </motion.div>
               </div>
               <Link to="/">
-                <Button variant="outline" className="mt-8 rounded-full">
+                <Button variant="outline" className="mt-8 rounded-full gap-2">
                   View the Full Ecosystem
+                  <ArrowRight size={14} />
                 </Button>
               </Link>
             </div>
