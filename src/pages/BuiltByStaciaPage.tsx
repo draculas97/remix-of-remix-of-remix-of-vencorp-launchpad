@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Star, Zap, Palette, Code, Shield, Users, Globe } from "lucide-react";
+import { ArrowRight, Check, Star, Zap, Palette, Code, Shield, Users, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -187,18 +187,13 @@ export default function BuiltByStaciaPage() {
       <Navbar />
       <div className="pt-16">
         {/* Hero */}
-        <section className="relative py-24 sm:py-32 overflow-hidden bg-foreground text-background">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0" style={{
-              backgroundImage: 'linear-gradient(hsl(var(--background)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--background)) 1px, transparent 1px)',
-              backgroundSize: '40px 40px'
-            }} />
-          </div>
+        <section className="relative py-24 sm:py-32 overflow-hidden">
+          <div className="absolute inset-0 dot-pattern opacity-50" />
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-destructive/10 rounded-full blur-3xl" />
           
           <div className="container relative z-10">
-            <Link to="/" className="inline-flex items-center gap-2 text-background/60 hover:text-background transition-colors mb-8">
-              <ArrowLeft size={16} />
-              <span className="font-mono text-xs uppercase tracking-wider">Back to Home</span>
+            <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8">
+              <span className="font-mono text-xs uppercase tracking-wider">← Back to Home</span>
             </Link>
 
             <motion.div
@@ -212,23 +207,23 @@ export default function BuiltByStaciaPage() {
                   <div className="w-4 h-6 bg-background rounded-sm" />
                 </div>
                 <span className="font-bold text-xl">Built<sup className="text-xs">®</sup></span>
-                <span className="text-background/50 text-sm">by Stacia</span>
+                <span className="text-muted-foreground text-sm">by Stacia</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
                 We Build <span className="text-destructive">Visually</span> Intelligent Websites
               </h1>
 
-              <p className="text-xl text-background/70 max-w-2xl mb-4">
+              <p className="text-xl text-muted-foreground max-w-2xl mb-4">
                 Ultra Fast 2-day Delivery. Premium UI/UX. Low-cost.
               </p>
-              <p className="text-lg font-bold text-background/90 mb-8">
+              <p className="text-lg font-bold mb-8">
                 Built. The Premium Experience
               </p>
 
-              <a href="https://builtbystacia.com" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="rounded-full px-8 gap-2 bg-destructive hover:bg-destructive/90 text-background">
-                  View Pricing Plans
+              <a href="https://www.builtbystacia.com" target="_blank" rel="noopener noreferrer">
+                <Button size="lg" className="rounded-full px-8 gap-2 bg-destructive hover:bg-destructive/90">
+                  Build Your Website
                   <ArrowRight size={18} />
                 </Button>
               </a>
@@ -237,18 +232,18 @@ export default function BuiltByStaciaPage() {
         </section>
 
         {/* USPs */}
-        <section className="py-24 sm:py-32 bg-foreground text-background">
+        <section className="py-24 sm:py-32 bg-muted/30">
           <div className="container">
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="text-center text-background/50 font-mono text-sm tracking-wider uppercase mb-16"
+              className="text-center text-muted-foreground font-mono text-sm tracking-wider uppercase mb-16"
             >
               Scroll to explore our Unique Selling Propositions (USP)
             </motion.p>
 
-            <div className="space-y-8">
+            <div className="grid md:grid-cols-2 gap-6">
               {usps.map((usp, index) => (
                 <motion.div
                   key={usp.title}
@@ -256,18 +251,17 @@ export default function BuiltByStaciaPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="grid md:grid-cols-2 gap-8 items-center p-8 rounded-2xl border border-background/10 bg-background/5"
+                  className="bento-card group"
                 >
-                  <div className="relative aspect-video rounded-xl bg-background/10 overflow-hidden flex items-center justify-center">
-                    <div className="absolute top-4 left-4 w-10 h-10 rounded-full bg-background/20 flex items-center justify-center font-bold text-lg">
-                      {usp.number}
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-destructive/10 flex items-center justify-center text-destructive flex-shrink-0">
+                      {usp.icon}
                     </div>
-                    <div className="text-background/30">{usp.icon}</div>
-                  </div>
-                  <div>
-                    <h3 className="text-2xl md:text-3xl font-bold mb-2">{usp.title}</h3>
-                    <p className="text-edifai font-mono text-xs tracking-wider uppercase mb-4">{usp.subtitle}</p>
-                    <p className="text-background/70 leading-relaxed">{usp.desc}</p>
+                    <div>
+                      <h3 className="text-xl font-bold mb-1">{usp.title}</h3>
+                      <p className="text-destructive font-mono text-xs tracking-wider uppercase mb-3">{usp.subtitle}</p>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{usp.desc}</p>
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -276,7 +270,7 @@ export default function BuiltByStaciaPage() {
         </section>
 
         {/* Pricing */}
-        <section className="py-24 sm:py-32 bg-foreground text-background">
+        <section className="py-24 sm:py-32">
           <div className="container">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -287,16 +281,16 @@ export default function BuiltByStaciaPage() {
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
                 Transparent <span className="text-destructive">Pricing</span>
               </h2>
-              <p className="text-background/70 max-w-lg mx-auto mb-8">
+              <p className="text-muted-foreground max-w-lg mx-auto mb-8">
                 Choose the perfect plan for your project. No hidden fees, no surprises—just exceptional value.
               </p>
 
               {/* Tab Toggle */}
-              <div className="inline-flex items-center gap-2 p-1 rounded-full bg-background/10 border border-background/20">
+              <div className="inline-flex items-center gap-2 p-1 rounded-full bg-muted border border-border/60">
                 <button
                   onClick={() => setActiveTab("marketing")}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full font-mono text-sm transition-all ${
-                    activeTab === "marketing" ? "bg-background text-foreground" : "text-background/70 hover:text-background"
+                    activeTab === "marketing" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   <Globe size={14} />
@@ -305,7 +299,7 @@ export default function BuiltByStaciaPage() {
                 <button
                   onClick={() => setActiveTab("ecommerce")}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full font-mono text-sm transition-all ${
-                    activeTab === "ecommerce" ? "bg-background text-foreground" : "text-background/70 hover:text-background"
+                    activeTab === "ecommerce" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   <Star size={14} />
@@ -319,11 +313,11 @@ export default function BuiltByStaciaPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="max-w-xl mx-auto mb-12 p-4 rounded-2xl bg-destructive/20 border border-destructive/30 text-center"
+              className="max-w-xl mx-auto mb-12 p-4 rounded-2xl bg-destructive/10 border border-destructive/30 text-center"
             >
               <p className="text-lg">
                 Special Offer: Annual Maintenance is <span className="text-2xl font-bold">Free</span>
-                <span className="text-background/50 line-through ml-2">₹2,999</span>
+                <span className="text-muted-foreground line-through ml-2">₹2,999</span>
                 <span className="text-destructive ml-2">(*for the 1st Year!)</span>
               </p>
             </motion.div>
@@ -338,12 +332,12 @@ export default function BuiltByStaciaPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className={`relative p-6 rounded-2xl border ${
-                    plan.popular ? "border-destructive/50 bg-background/10" : "border-background/10 bg-background/5"
+                    plan.popular ? "border-destructive/50 bg-destructive/5" : "border-border/60 bg-card"
                   }`}
                 >
                   {plan.popular && (
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-destructive text-sm font-medium">
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-destructive text-primary-foreground text-sm font-medium">
                         <Star size={12} fill="currentColor" />
                         Most Popular
                       </span>
@@ -351,13 +345,13 @@ export default function BuiltByStaciaPage() {
                   )}
 
                   <h3 className="text-xl font-bold mb-1">{plan.name}</h3>
-                  <p className="text-sm text-background/50 mb-4">{plan.tagline}</p>
+                  <p className="text-sm text-muted-foreground mb-4">{plan.tagline}</p>
 
                   <div className="flex items-baseline gap-2 mb-6">
                     <span className="text-3xl font-bold text-destructive">{plan.price}</span>
                     {plan.originalPrice && (
                       <>
-                        <span className="text-sm text-background/40 line-through">{plan.originalPrice}</span>
+                        <span className="text-sm text-muted-foreground line-through">{plan.originalPrice}</span>
                         <span className="text-xs px-2 py-0.5 rounded-full bg-edifai/20 text-edifai">{plan.discount}</span>
                       </>
                     )}
@@ -365,19 +359,21 @@ export default function BuiltByStaciaPage() {
 
                   <ul className="space-y-3 mb-6">
                     {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2 text-sm text-background/70">
+                      <li key={feature} className="flex items-start gap-2 text-sm text-muted-foreground">
                         <Check size={16} className="text-edifai flex-shrink-0 mt-0.5" />
                         {feature}
                       </li>
                     ))}
                   </ul>
 
-                  <Button 
-                    variant={plan.popular ? "default" : "outline"} 
-                    className={`w-full rounded-full ${plan.popular ? "bg-destructive hover:bg-destructive/90" : "border-background/20 text-background hover:bg-background/10"}`}
-                  >
-                    Let's Build Your Website
-                  </Button>
+                  <a href="https://www.builtbystacia.com" target="_blank" rel="noopener noreferrer" className="block">
+                    <Button 
+                      variant={plan.popular ? "default" : "outline"} 
+                      className={`w-full rounded-full ${plan.popular ? "bg-destructive hover:bg-destructive/90" : ""}`}
+                    >
+                      Let's Build Your Website
+                    </Button>
+                  </a>
                 </motion.div>
               ))}
             </div>
@@ -385,31 +381,31 @@ export default function BuiltByStaciaPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-24 sm:py-32 bg-foreground text-background border-t border-background/10">
+        <section className="py-24 sm:py-32 bg-muted/30">
           <div className="container">
-            <div className="grid lg:grid-cols-2 gap-12">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 className="space-y-6"
               >
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-background/20 text-sm">
+                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border/60 text-sm">
                   <span className="w-2 h-2 rounded-full bg-edifai animate-pulse" />
                   AVAILABLE NOW
                 </span>
-                <p className="font-mono text-xs text-background/50 tracking-wider uppercase">
+                <p className="font-mono text-xs text-muted-foreground tracking-wider uppercase">
                   PREMIUM LAUNCH-READY SYSTEMS
                 </p>
                 <h2 className="text-3xl sm:text-4xl font-bold">
                   Transform Your Presence
                 </h2>
-                <p className="text-background/70">
+                <p className="text-muted-foreground">
                   Launch a high-performing, brand-true website in as little as{" "}
                   <span className="text-destructive underline">2-day Rapid Deployment</span>. 
                   Designed, engineered, and optimized to feel premium from day one.
                 </p>
-                <div className="flex flex-wrap gap-6 text-sm text-background/60">
+                <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
                   <span className="flex items-center gap-2">
                     <Check size={14} className="text-destructive" />
                     Strategy, design & build aligned
@@ -419,7 +415,7 @@ export default function BuiltByStaciaPage() {
                     High-touch launch support
                   </span>
                 </div>
-                <a href="https://builtbystacia.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.builtbystacia.com" target="_blank" rel="noopener noreferrer">
                   <Button size="lg" className="rounded-full gap-2 bg-destructive hover:bg-destructive/90">
                     Build Your Digital Presence
                     <span className="w-2 h-2 rounded-full bg-background animate-pulse" />
@@ -431,34 +427,33 @@ export default function BuiltByStaciaPage() {
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="space-y-6 p-8 rounded-2xl border border-background/10 bg-background/5"
+                className="space-y-6 p-8 rounded-2xl border border-border/60 bg-card"
               >
-                <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-background/20 text-sm">
-                  <Star size={12} className="text-gine" />
-                  LET'S BUILD TOGETHER
-                </span>
-                <h3 className="text-2xl font-bold">
-                  A Dedicated Engineering Lane for your Brand
-                </h3>
-                <p className="text-background/70">
-                  Share your goals, assets, and constraints. We architect a launch-ready experience 
-                  that feels handcrafted, not templated, and deliver it without compromising on craft.
+                <h3 className="text-2xl font-bold">Get a Custom Quote</h3>
+                <p className="text-muted-foreground">
+                  Have a unique project in mind? Let's discuss your requirements.
                 </p>
                 <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <Check size={16} className="text-destructive mt-1" />
-                    <div>
-                      <p className="font-bold">2-day Rapid Deployment Window</p>
-                      <p className="text-sm text-background/50">Ideal for launches, campaigns, or high-visibility refreshes.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Check size={16} className="text-destructive mt-1" />
-                    <div>
-                      <p className="font-bold">Performance-First Engineering</p>
-                      <p className="text-sm text-background/50">Optimized for lighthouse scores, responsiveness, and stability.</p>
-                    </div>
-                  </div>
+                  <input 
+                    type="text" 
+                    placeholder="Your Name"
+                    className="w-full px-4 py-3 rounded-xl border border-border/60 bg-background text-sm focus:outline-none focus:ring-2 focus:ring-destructive/20"
+                  />
+                  <input 
+                    type="email" 
+                    placeholder="Email Address"
+                    className="w-full px-4 py-3 rounded-xl border border-border/60 bg-background text-sm focus:outline-none focus:ring-2 focus:ring-destructive/20"
+                  />
+                  <textarea 
+                    placeholder="Tell us about your project..."
+                    rows={4}
+                    className="w-full px-4 py-3 rounded-xl border border-border/60 bg-background text-sm focus:outline-none focus:ring-2 focus:ring-destructive/20 resize-none"
+                  />
+                  <a href="https://www.builtbystacia.com" target="_blank" rel="noopener noreferrer" className="block">
+                    <Button className="w-full rounded-full bg-destructive hover:bg-destructive/90">
+                      Request Quote
+                    </Button>
+                  </a>
                 </div>
               </motion.div>
             </div>
