@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Users, Target, Zap, Globe, Award, Rocket } from "lucide-react";
+import { ArrowLeft, Users, Target, Zap, Globe, Award, Rocket, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -24,6 +25,13 @@ const team = [
   { name: "Priya Sharma", role: "CTO", avatar: "PS" },
   { name: "Rahul Mehta", role: "VP, Product", avatar: "RM" },
   { name: "Ananya Gupta", role: "VP, Engineering", avatar: "AG" },
+];
+
+const stats = [
+  { value: "50K+", label: "Founders Served" },
+  { value: "40+", label: "Countries" },
+  { value: "95%", label: "Satisfaction Rate" },
+  { value: "₹500Cr+", label: "Funding Facilitated" },
 ];
 
 export default function AboutPage() {
@@ -55,14 +63,35 @@ export default function AboutPage() {
                 Building the Future of <span className="text-stello">Innovation</span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl">
-                Vencorp is the operating system for startups. We provide the tools, infrastructure, and intelligence founders need to go from idea to IPO.
+                Vencorp by Stacia Corp is the operating system for startups. We provide the tools, infrastructure, and intelligence founders need to go from idea to IPO.
               </p>
             </motion.div>
           </div>
         </section>
 
+        {/* Stats */}
+        <section className="py-12 border-y border-border/60 bg-muted/30">
+          <div className="container">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="text-3xl sm:text-4xl font-bold text-stello">{stat.value}</div>
+                  <div className="font-mono text-xs text-muted-foreground uppercase tracking-wider mt-1">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Mission */}
-        <section className="py-24 sm:py-32 bg-muted/30">
+        <section className="py-24 sm:py-32">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
               <motion.div
@@ -82,7 +111,7 @@ export default function AboutPage() {
         </section>
 
         {/* Values */}
-        <section className="py-24 sm:py-32">
+        <section className="py-24 sm:py-32 bg-muted/30">
           <div className="container">
             <div className="text-center max-w-2xl mx-auto mb-16">
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Our Values</h2>
@@ -116,7 +145,7 @@ export default function AboutPage() {
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Our Journey</h2>
               <p className="text-background/70">From idea to industry leader.</p>
             </div>
-            <div className="max-w-2xl mx-auto space-y-6">
+            <div className="max-w-2xl mx-auto">
               {milestones.map((milestone, index) => (
                 <motion.div
                   key={milestone.year}
@@ -124,10 +153,13 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex gap-4"
+                  className="flex gap-6 mb-6"
                 >
-                  <span className="font-mono text-sm text-stello font-bold w-16 flex-shrink-0">{milestone.year}</span>
-                  <p className="text-background/80">{milestone.event}</p>
+                  <div className="flex flex-col items-center">
+                    <span className="font-mono text-sm text-stello font-bold w-16">{milestone.year}</span>
+                    {index < milestones.length - 1 && <div className="w-px h-full bg-background/20 mt-2" />}
+                  </div>
+                  <p className="text-background/80 pb-6">{milestone.event}</p>
                 </motion.div>
               ))}
             </div>
@@ -169,15 +201,19 @@ export default function AboutPage() {
               <Rocket size={48} className="text-pragati mx-auto mb-6" />
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Ready to Build?</h2>
               <p className="text-muted-foreground mb-8">Join thousands of founders building the future with Vencorp.</p>
-              <Link to="/#enquiry">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-foreground text-background font-medium"
-                >
-                  Get Started
-                </motion.button>
-              </Link>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link to="/#enquiry">
+                  <Button size="lg" className="rounded-full gap-2">
+                    Get Started
+                    <ArrowRight size={18} />
+                  </Button>
+                </Link>
+                <a href="https://staciacorp.com/career" target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" variant="outline" className="rounded-full">
+                    Join Our Team
+                  </Button>
+                </a>
+              </div>
             </div>
           </div>
         </section>

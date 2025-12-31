@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Sparkles, Dna, Zap, Network, BookOpen, TrendingUp } from "lucide-react";
+import { ArrowLeft, Sparkles, Dna, Zap, Network, BookOpen, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
@@ -32,6 +32,15 @@ const categories = [
   { name: "Legal & Compliance", modules: 6, progress: 90 },
   { name: "Sales & Marketing", modules: 10, progress: 25 },
   { name: "Technical Leadership", modules: 9, progress: 55 },
+];
+
+const adaptiveFeatures = [
+  "Personalized learning paths based on Pragati scores",
+  "Real-time curriculum adjustments",
+  "Progress synced with validation metrics",
+  "Team skill gap identification",
+  "Industry-specific modules",
+  "Certification upon completion",
 ];
 
 export default function EdifaiPage() {
@@ -75,9 +84,17 @@ export default function EdifaiPage() {
                 Static courses are obsolete. Edifai uses AI to analyze your Pragati validation scores and generates a custom, adaptive curriculum to bridge your specific skill gaps.
               </p>
 
-              <Button size="lg" className="rounded-full px-8 gap-2 bg-edifai hover:bg-edifai/90 text-primary-foreground">
-                Generate Learning Path
-              </Button>
+              <div className="flex flex-wrap gap-4">
+                <a href="https://www.edifai.in" target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" className="rounded-full px-8 gap-2 bg-edifai hover:bg-edifai/90 text-primary-foreground">
+                    Try Edifai
+                    <ArrowRight size={18} />
+                  </Button>
+                </a>
+                <Button size="lg" variant="outline" className="rounded-full px-8">
+                  View Curriculum
+                </Button>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -105,24 +122,37 @@ export default function EdifaiPage() {
           </div>
         </section>
 
-        {/* Learning Categories */}
+        {/* Adaptive Curriculum - Revamped */}
         <section className="py-24 sm:py-32">
           <div className="container">
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-                  Adaptive Curriculum
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <span className="font-mono text-xs text-edifai tracking-wider uppercase">Adaptive Learning</span>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-3 mb-4">
+                  Curriculum That Evolves With You
                 </h2>
-                <p className="text-muted-foreground">
-                  Your learning path evolves as you do. Complete modules to update your Pragati score.
+                <p className="text-muted-foreground mb-8">
+                  Your learning path adapts in real-time based on your progress and Pragati validation scores. Complete modules to improve your innovation score.
                 </p>
-              </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {adaptiveFeatures.map((feature) => (
+                    <div key={feature} className="flex items-center gap-2">
+                      <CheckCircle size={16} className="text-edifai flex-shrink-0" />
+                      <span className="text-sm text-muted-foreground">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
 
               <div className="space-y-4">
                 {categories.map((category, index) => (
                   <motion.div
                     key={category.name}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
                     viewport={{ once: true }}
@@ -181,11 +211,19 @@ export default function EdifaiPage() {
                   moving you closer to the "Hall of Fame" (Green) status and funding opportunities.
                 </p>
               </div>
-              <Link to="/">
-                <Button variant="outline" className="mt-8 rounded-full text-foreground border-background/20 hover:bg-background/10">
-                  View the Full Ecosystem
-                </Button>
-              </Link>
+              <div className="flex flex-wrap justify-center gap-4 mt-8">
+                <a href="https://www.edifai.in" target="_blank" rel="noopener noreferrer">
+                  <Button className="rounded-full gap-2 bg-edifai hover:bg-edifai/90 text-foreground">
+                    Start Learning
+                    <ArrowRight size={16} />
+                  </Button>
+                </a>
+                <Link to="/">
+                  <Button variant="outline" className="rounded-full border-background/20 text-background hover:bg-background/10">
+                    View the Full Ecosystem
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>

@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Check, Zap, Building2, Rocket } from "lucide-react";
+import { Check, Zap, Building2, Rocket, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const plans = [
   {
@@ -18,6 +19,7 @@ const plans = [
       "Email support",
     ],
     cta: "Get Started",
+    ctaLink: "/auth",
     popular: false,
     accentClass: "text-muted-foreground",
   },
@@ -37,6 +39,7 @@ const plans = [
       "Team collaboration (up to 5)",
     ],
     cta: "Start Free Trial",
+    ctaLink: "/auth",
     popular: true,
     accentClass: "text-pragati",
   },
@@ -57,6 +60,7 @@ const plans = [
       "SLA guarantee",
     ],
     cta: "Contact Sales",
+    ctaLink: "/#enquiry",
     popular: false,
     accentClass: "text-gine",
   },
@@ -87,23 +91,22 @@ export default function Pricing() {
           </p>
         </motion.div>
 
-        {/* Horizontal scroll on mobile, grid on desktop */}
-        <div className="flex md:grid md:grid-cols-3 gap-6 max-w-5xl mx-auto overflow-x-auto pb-4 md:pb-0 snap-x snap-mandatory scrollbar-hide">
+        {/* Pricing Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -4, transition: { duration: 0.2 } }}
-              className={`bento-card relative flex flex-col min-w-[300px] md:min-w-0 snap-center ${
+              className={`bento-card relative flex flex-col ${
                 plan.popular ? "border-pragati/50 shadow-glow-pragati md:scale-105" : ""
               }`}
             >
-              {/* Popular badge - visible and positioned above card */}
+              {/* Popular badge */}
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                  <span className="bg-pragati text-white font-mono text-[10px] uppercase tracking-wider px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap">
+                  <span className="bg-pragati text-primary-foreground font-mono text-[10px] uppercase tracking-wider px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap">
                     Most Popular
                   </span>
                 </div>
@@ -138,22 +141,33 @@ export default function Pricing() {
               </ul>
 
               {/* CTA */}
-              <Button
-                variant={plan.popular ? "default" : "outline"}
-                className="w-full rounded-full"
-              >
-                {plan.cta}
-              </Button>
+              <Link to={plan.ctaLink}>
+                <Button
+                  variant={plan.popular ? "default" : "outline"}
+                  className={`w-full rounded-full gap-2 ${plan.popular ? "bg-pragati hover:bg-pragati/90" : ""}`}
+                >
+                  {plan.cta}
+                  <ArrowRight size={16} />
+                </Button>
+              </Link>
             </motion.div>
           ))}
         </div>
 
-        {/* Scroll hint on mobile */}
-        <div className="flex justify-center gap-2 mt-4 md:hidden">
-          {plans.map((_, i) => (
-            <div key={i} className="w-2 h-2 rounded-full bg-border" />
-          ))}
-        </div>
+        {/* Enterprise CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-12 text-center"
+        >
+          <p className="text-muted-foreground text-sm">
+            Need a custom solution?{" "}
+            <Link to="/#enquiry" className="text-foreground underline underline-offset-4 hover:text-pragati transition-colors">
+              Let's talk
+            </Link>
+          </p>
+        </motion.div>
       </div>
     </section>
   );
