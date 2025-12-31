@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ProductGrid from "@/components/ProductGrid";
+import UserJourneyFlow from "@/components/UserJourneyFlow";
 import Testimonials from "@/components/Testimonials";
 import Pricing from "@/components/Pricing";
 import DocumentsSection from "@/components/DocumentsSection";
@@ -15,6 +16,7 @@ export default function Index() {
       <div className="pt-16">
         <Hero />
         <ProductGrid />
+        <UserJourneyFlow />
         <Testimonials />
         <Pricing />
         <DocumentsSection />
