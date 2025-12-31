@@ -1,41 +1,98 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, LogOut, User, ChevronDown } from "lucide-react";
+import { Menu, X, LogOut, User, ChevronDown, Brain, Server, Sparkles, Users, Lightbulb, Briefcase, Box, Palette, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
 const productLinks = [
-  { name: "Pragati", href: "/pragati", desc: "AI-powered validation" },
-  { name: "Stello", href: "/stello", desc: "Back-office automation" },
-  { name: "Edifai", href: "/edifai", desc: "Adaptive learning" },
-  { name: "Interllexia", href: "/interllexia", desc: "Co-founder matching" },
-  { name: "GINE", href: "/gine", desc: "IP marketplace" },
-  { name: "Job Portal", href: "/job-portal", desc: "Talent network" },
-  { name: "Tezzaract", href: "/tezzaract", desc: "3D marketplace" },
-  { name: "Built by Stacia", href: "/built-by-stacia", desc: "Premium websites" },
+  { 
+    name: "Pragati", 
+    href: "/pragati", 
+    externalUrl: "https://pragati.thevencorp.com",
+    desc: "AI-powered validation for your ideas", 
+    icon: <Brain size={20} />,
+    color: "text-pragati bg-pragati/10"
+  },
+  { 
+    name: "Stello", 
+    href: "/stello", 
+    desc: "Back-office automation platform", 
+    icon: <Server size={20} />,
+    color: "text-stello bg-stello/10"
+  },
+  { 
+    name: "Edifai", 
+    href: "/edifai", 
+    externalUrl: "https://www.edifai.in",
+    desc: "Adaptive learning and upskilling", 
+    icon: <Sparkles size={20} />,
+    color: "text-edifai bg-edifai/10"
+  },
+  { 
+    name: "Interllexia", 
+    href: "/interllexia", 
+    desc: "AI co-founder matching engine", 
+    icon: <Users size={20} />,
+    color: "text-interllexia bg-interllexia/10"
+  },
+  { 
+    name: "GINE", 
+    href: "/gine", 
+    desc: "IP marketplace for innovation", 
+    icon: <Lightbulb size={20} />,
+    color: "text-gine bg-gine/10"
+  },
+  { 
+    name: "Job Portal", 
+    href: "/job-portal", 
+    desc: "Startup talent network", 
+    icon: <Briefcase size={20} />,
+    color: "text-jobportal bg-jobportal/10"
+  },
+  { 
+    name: "Tezzaract", 
+    href: "/tezzaract", 
+    externalUrl: "https://tezzaract.com",
+    desc: "3D asset marketplace", 
+    icon: <Box size={20} />,
+    color: "text-tezzaract bg-tezzaract/10"
+  },
+  { 
+    name: "Built by Stacia", 
+    href: "/built-by-stacia", 
+    externalUrl: "https://www.builtbystacia.com",
+    desc: "Premium website development", 
+    icon: <Palette size={20} />,
+    color: "text-destructive bg-destructive/10"
+  },
 ];
 
 const resourceLinks = [
-  { name: "Documentation", href: "/documentation" },
-  { name: "API Reference", href: "/api-reference" },
-  { name: "Status", href: "/status" },
-  { name: "Support", href: "/support" },
-  { name: "Press", href: "/press" },
-  { name: "Blog", href: "/blog" },
-];
-
-const companyLinks = [
-  { name: "About", href: "/about" },
-  { name: "Careers", href: "/careers" },
+  { name: "Documentation", href: "/documentation", desc: "Guides & tutorials" },
+  { name: "API Reference", href: "/api-reference", desc: "Developer docs" },
+  { name: "Status", href: "/status", desc: "System health" },
+  { name: "Support", href: "/support", desc: "Get help" },
+  { name: "Press", href: "/press", desc: "News & media" },
+  { name: "Blog", href: "/blog", desc: "Updates & insights" },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [isDark, setIsDark] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
   const { user, logout } = useAuth();
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (isDark) {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  }, [isDark]);
 
   const handleScrollClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith("#") && isHome) {
@@ -50,27 +107,19 @@ export default function Navbar() {
     }
   };
 
-  const DropdownMenu = ({ 
-    title, 
-    items, 
-    showDesc = false 
-  }: { 
-    title: string; 
-    items: { name: string; href: string; desc?: string }[];
-    showDesc?: boolean;
-  }) => {
-    const isActive = openDropdown === title;
+  const ProductsDropdown = () => {
+    const isActive = openDropdown === "Products";
     
     return (
       <div 
         className="relative"
-        onMouseEnter={() => setOpenDropdown(title)}
+        onMouseEnter={() => setOpenDropdown("Products")}
         onMouseLeave={() => setOpenDropdown(null)}
       >
         <button 
           className="flex items-center gap-1 font-mono text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
         >
-          {title}
+          Products
           <ChevronDown size={12} className={`transition-transform ${isActive ? 'rotate-180' : ''}`} />
         </button>
         
@@ -81,20 +130,69 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.15 }}
-              className={`absolute top-full left-0 mt-2 ${showDesc ? 'w-64' : 'w-48'} py-2 rounded-xl border border-border/60 bg-popover shadow-lg z-50`}
+              className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[560px] py-4 px-4 rounded-2xl border border-border/60 bg-popover shadow-xl z-50"
             >
-              {items.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="block px-4 py-2 hover:bg-muted transition-colors"
-                >
-                  <span className="font-mono text-xs text-foreground">{item.name}</span>
-                  {showDesc && item.desc && (
-                    <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>
-                  )}
-                </Link>
-              ))}
+              <div className="grid grid-cols-2 gap-2">
+                {productLinks.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="flex items-start gap-3 p-3 rounded-xl hover:bg-muted transition-colors group"
+                  >
+                    <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${item.color} flex-shrink-0`}>
+                      {item.icon}
+                    </div>
+                    <div className="min-w-0">
+                      <span className="font-medium text-sm text-foreground group-hover:text-foreground block">{item.name}</span>
+                      <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{item.desc}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  };
+
+  const ResourcesDropdown = () => {
+    const isActive = openDropdown === "Resources";
+    
+    return (
+      <div 
+        className="relative"
+        onMouseEnter={() => setOpenDropdown("Resources")}
+        onMouseLeave={() => setOpenDropdown(null)}
+      >
+        <button 
+          className="flex items-center gap-1 font-mono text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Resources
+          <ChevronDown size={12} className={`transition-transform ${isActive ? 'rotate-180' : ''}`} />
+        </button>
+        
+        <AnimatePresence>
+          {isActive && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.15 }}
+              className="absolute top-full right-0 mt-2 w-[320px] py-3 rounded-2xl border border-border/60 bg-popover shadow-xl z-50"
+            >
+              <div className="grid grid-cols-2 gap-1 px-2">
+                {resourceLinks.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="flex flex-col p-3 rounded-xl hover:bg-muted transition-colors"
+                  >
+                    <span className="font-medium text-sm text-foreground">{item.name}</span>
+                    <span className="text-xs text-muted-foreground mt-0.5">{item.desc}</span>
+                  </Link>
+                ))}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -117,20 +215,28 @@ export default function Navbar() {
 
         <ul className="hidden items-center gap-6 lg:flex">
           <li>
-            <DropdownMenu title="Products" items={productLinks} showDesc />
+            <ProductsDropdown />
           </li>
-          {companyLinks.map((link) => (
-            <li key={link.name}>
-              <Link
-                to={link.href}
-                className="font-mono text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {link.name}
-              </Link>
-            </li>
-          ))}
           <li>
-            <DropdownMenu title="Resources" items={resourceLinks} />
+            <Link
+              to="/about"
+              className="font-mono text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+            >
+              About
+            </Link>
+          </li>
+          <li>
+            <a
+              href="https://staciacorp.com/career"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Careers
+            </a>
+          </li>
+          <li>
+            <ResourcesDropdown />
           </li>
           {isHome && (
             <>
@@ -157,6 +263,15 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden lg:flex items-center gap-3">
+          {/* Theme Toggle */}
+          <button
+            onClick={() => setIsDark(!isDark)}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border/60 hover:bg-muted transition-colors"
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+
           {user ? (
             <>
               <span className="font-mono text-xs text-muted-foreground flex items-center gap-2">
@@ -182,13 +297,22 @@ export default function Navbar() {
           )}
         </div>
 
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-muted lg:hidden"
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <button
+            onClick={() => setIsDark(!isDark)}
+            className="flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-muted"
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-muted"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </nav>
 
       <AnimatePresence>
@@ -209,12 +333,15 @@ export default function Navbar() {
                       <Link
                         to={link.href}
                         onClick={() => setIsOpen(false)}
-                        className="block py-2 px-3 rounded-lg hover:bg-muted transition-colors"
+                        className="flex items-start gap-2 py-2 px-3 rounded-lg hover:bg-muted transition-colors"
                       >
-                        <span className="font-mono text-sm">{link.name}</span>
-                        {link.desc && (
-                          <p className="text-xs text-muted-foreground">{link.desc}</p>
-                        )}
+                        <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${link.color} flex-shrink-0`}>
+                          {link.icon}
+                        </div>
+                        <div>
+                          <span className="font-mono text-sm block">{link.name}</span>
+                          <p className="text-xs text-muted-foreground line-clamp-1">{link.desc}</p>
+                        </div>
                       </Link>
                     </li>
                   ))}
@@ -225,17 +352,25 @@ export default function Navbar() {
               <div className="mb-6">
                 <p className="font-mono text-xs text-muted-foreground tracking-wider uppercase mb-3">Company</p>
                 <ul className="flex gap-4">
-                  {companyLinks.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        to={link.href}
-                        onClick={() => setIsOpen(false)}
-                        className="font-mono text-sm hover:text-foreground text-muted-foreground transition-colors"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
+                  <li>
+                    <Link
+                      to="/about"
+                      onClick={() => setIsOpen(false)}
+                      className="font-mono text-sm hover:text-foreground text-muted-foreground transition-colors"
+                    >
+                      About
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      href="https://staciacorp.com/career"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-sm hover:text-foreground text-muted-foreground transition-colors"
+                    >
+                      Careers
+                    </a>
+                  </li>
                 </ul>
               </div>
 

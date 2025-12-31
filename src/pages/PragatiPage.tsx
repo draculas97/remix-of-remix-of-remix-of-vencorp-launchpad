@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Brain, Target, BarChart3, CheckCircle, XCircle, AlertTriangle, Rocket, Building2, Lightbulb, TrendingUp, ArrowRight } from "lucide-react";
+import { ArrowLeft, Brain, Target, BarChart3, CheckCircle, XCircle, AlertTriangle, Rocket, Building2, Lightbulb, ArrowRight, GraduationCap, Building, Users, Star, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -31,8 +31,8 @@ const scoreRanges = [
     icon: <CheckCircle size={20} />,
     diagnosis: "Market Ready.",
     action: "Greenlit for Stacia Corp Prototyping.",
-    color: "text-pragati",
-    bg: "bg-pragati/10",
+    color: "text-edifai",
+    bg: "bg-edifai/10",
   },
 ];
 
@@ -40,33 +40,21 @@ const strategicQuadrants = [
   {
     name: "Core",
     position: "bottom-left",
-    color: "bg-muted",
-    textColor: "text-foreground",
-    icon: <BarChart3 size={24} />,
     desc: "Gradual, continuous improvements on existing products and services.",
   },
   {
     name: "Architectural",
     position: "top-left", 
-    color: "bg-muted",
-    textColor: "text-foreground",
-    icon: <Building2 size={24} />,
     desc: "A significant improvement on a product that aims to sustain the position in an existing market.",
   },
   {
     name: "Emerging",
     position: "bottom-right",
-    color: "bg-stello/20",
-    textColor: "text-stello",
-    icon: <Lightbulb size={24} />,
     desc: "Technology or new business model that disrupts the existing market.",
   },
   {
     name: "Transformational",
     position: "top-right",
-    color: "bg-interllexia/20",
-    textColor: "text-interllexia",
-    icon: <Rocket size={24} />,
     desc: "Technological breakthrough that transforms industries, often creates a new market.",
   },
 ];
@@ -89,27 +77,80 @@ const weightCategories = [
   { name: "Risk & Future Outlook", abbr: "R & FO", weight: 5, color: "bg-pragati" },
 ];
 
-const features = [
+const ecosystemFeatures = [
   {
     icon: <Brain size={24} />,
-    title: "The Deep Scan",
-    description: "Your pitch is analyzed by our proprietary AI engine. It scans for technical feasibility, market saturation, and financial sustainability using a dataset of over 50,000 successful (and failed) startups.",
+    title: "AI-Powered Validation",
+    description: "Receive in-depth, structured feedback on your ideas in minutes, not weeks. Our AI analyzes your concept against dozens of key viability parameters.",
   },
   {
     icon: <Target size={24} />,
-    title: "The 110-Point Protocol",
-    description: "We don't just check for \"good ideas.\" We test for structural integrity. Is the TAM real? Is the moat defensible? Is the unit economics positive?",
+    title: "Guided Innovation Roadmap",
+    description: "Don't just get a score, get a plan. PragatiAI provides a clear, step-by-step roadmap to take your idea from TRL 1 to market-ready.",
   },
   {
     icon: <BarChart3 size={24} />,
-    title: "The Verdict",
-    description: "No bias. No \"gut feelings.\" Just raw, data-backed scoring. You get a definitive \"Go\" or \"No-Go\" based purely on probability of success.",
+    title: "Role-Based Dashboards",
+    description: "Track performance, identify trends, and make data-driven decisions with dashboards tailored to every role, from innovator to administrator.",
   },
+];
+
+const whoWeServe = [
+  {
+    id: "institutions",
+    label: "Institutions",
+    icon: <GraduationCap size={20} />,
+    title: "Institutions",
+    description: "For colleges and universities, Pragati helps manage Technology Transfer Cells (TTCs) and nurture student and faculty ideas within your innovation ecosystem.",
+  },
+  {
+    id: "organisations",
+    label: "Organisations & GCCs",
+    icon: <Building size={20} />,
+    title: "Organisations & GCCs",
+    description: "For corporations and Global Capability Centers, Pragati streamlines intrapreneurship programs and evaluates employee-driven innovation at scale.",
+  },
+  {
+    id: "innovators",
+    label: "Innovators",
+    icon: <Users size={20} />,
+    title: "Innovators",
+    description: "For individual innovators and startups, Pragati provides affordable access to enterprise-grade validation tools previously reserved for funded ventures.",
+  },
+];
+
+const testimonials = [
+  {
+    name: "Aarav Sharma",
+    role: "Student Innovator",
+    content: "PragatiAI transformed my raw concept into a fundable project. The AI feedback was like having a team of expert consultants 24/7.",
+    avatar: "A",
+  },
+  {
+    name: "Dr. Priya Desai",
+    role: "TTC Coordinator",
+    content: "As a mentor, this platform is a game-changer. I can track my students' progress, provide targeted feedback, and see real results.",
+    avatar: "P",
+  },
+  {
+    name: "R. Madhavan",
+    role: "College Principal",
+    content: "We've seen a 300% increase in quality idea submissions since adopting Pragati. It has revolutionized our college's innovation ecosystem.",
+    avatar: "R",
+  },
+];
+
+const trustedBy = [
+  "Tech Innovators Inc.", "Future Labs", "EduVentures", "AgriGrowth Corp",
+  "HealthForward", "FinSolutions", "CityZen", "GreenEnergy Co."
 ];
 
 export default function PragatiPage() {
   const [activeCluster, setActiveCluster] = useState("Balanced");
-  const [weights, setWeights] = useState(weightCategories);
+  const [weights] = useState(weightCategories);
+  const [activeTab, setActiveTab] = useState("institutions");
+
+  const activeServe = whoWeServe.find(s => s.id === activeTab);
 
   return (
     <main className="min-h-screen bg-background">
@@ -130,23 +171,37 @@ export default function PragatiPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="max-w-3xl"
+              className="max-w-4xl"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-pragati/30 bg-pragati/5 mb-6">
-                <span className="w-2 h-2 rounded-full bg-pragati animate-pulse-dot" />
+                <span className="w-2 h-2 rounded-full bg-pragati animate-pulse" />
                 <span className="font-mono text-xs text-pragati tracking-wider uppercase">
                   PRAGATI // The Validator
                 </span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
-                Eliminate the<br />
-                <span className="text-pragati">Guesswork.</span>
+                Pragati helps you<br />
+                <span className="text-pragati">Check for novelty.</span>
               </h1>
 
-              <p className="text-xl text-muted-foreground max-w-2xl mb-8">
-                The world's first AI-powered innovation gateway. We analyze your raw idea against 110 critical parameters to predict market viability before you write a single line of code.
+              <p className="text-xl text-muted-foreground max-w-2xl mb-4">
+                From concept to market-ready. Just prompt, no code.
               </p>
+
+              {/* Demo Input */}
+              <div className="max-w-xl mb-8">
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 border border-border/60 mb-3">
+                  <span className="px-3 py-1 rounded-full bg-edifai/10 text-edifai text-xs font-medium">Balanced</span>
+                </div>
+                <div className="relative">
+                  <input 
+                    type="text"
+                    placeholder="Generate a business plan for a fintech app..."
+                    className="w-full px-4 py-3 rounded-xl border border-border/60 bg-card text-sm focus:outline-none focus:ring-2 focus:ring-pragati/20"
+                  />
+                </div>
+              </div>
 
               <div className="flex flex-wrap gap-4">
                 <a href="https://pragati.thevencorp.com" target="_blank" rel="noopener noreferrer">
@@ -163,11 +218,25 @@ export default function PragatiPage() {
           </div>
         </section>
 
-        {/* Features Grid */}
+        {/* The Pragati Ecosystem */}
         <section className="py-24 sm:py-32 bg-muted/30">
           <div className="container">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-3xl mx-auto mb-16"
+            >
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                The Pragati Ecosystem
+              </h2>
+              <p className="text-muted-foreground">
+                Comprehensive tools designed to transform your innovative ideas into market-ready solutions
+              </p>
+            </motion.div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {features.map((feature, index) => (
+              {ecosystemFeatures.map((feature, index) => (
                 <motion.div
                   key={feature.title}
                   initial={{ opacity: 0, y: 30 }}
@@ -187,8 +256,57 @@ export default function PragatiPage() {
           </div>
         </section>
 
-        {/* Strategic Quadrants */}
+        {/* Who We Serve */}
         <section className="py-24 sm:py-32">
+          <div className="container">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-3xl mx-auto mb-12"
+            >
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                Who We Serve
+              </h2>
+              <p className="text-muted-foreground">
+                Pragati is tailored for every stage of the innovation journey.
+              </p>
+            </motion.div>
+
+            {/* Tabs */}
+            <div className="flex justify-center gap-2 mb-8">
+              {whoWeServe.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full font-mono text-sm transition-all ${
+                    activeTab === item.id
+                      ? "bg-pragati text-primary-foreground"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  }`}
+                >
+                  {item.icon}
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Content */}
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="max-w-2xl mx-auto p-8 rounded-2xl border border-border/60 bg-card"
+            >
+              <h3 className="text-2xl font-bold mb-4">{activeServe?.title}</h3>
+              <p className="text-muted-foreground leading-relaxed">{activeServe?.description}</p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Strategic Quadrants */}
+        <section className="py-24 sm:py-32 bg-muted/30">
           <div className="container">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -204,25 +322,12 @@ export default function PragatiPage() {
             <div className="max-w-4xl mx-auto">
               {/* Axis Labels */}
               <div className="relative">
-                {/* Y-axis label */}
-                <div className="absolute -left-8 top-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap">
-                  <span className="font-mono text-xs text-muted-foreground tracking-wider">
-                    <span className="text-foreground font-bold">Market Impact</span>
-                  </span>
-                </div>
-                <div className="absolute -left-4 top-0 text-xs text-muted-foreground">High Impact<br/>on Market</div>
-                <div className="absolute -left-4 bottom-0 text-xs text-muted-foreground">Existing<br/>Market</div>
+                <div className="absolute -left-4 top-0 text-xs text-muted-foreground hidden md:block">High Impact<br/>on Market</div>
+                <div className="absolute -left-4 bottom-0 text-xs text-muted-foreground hidden md:block">Existing<br/>Market</div>
+                <div className="absolute bottom-[-40px] left-0 text-xs text-muted-foreground hidden md:block">Existing Technology</div>
+                <div className="absolute bottom-[-40px] right-0 text-xs text-muted-foreground hidden md:block">New Technology</div>
 
-                {/* X-axis label */}
-                <div className="absolute bottom-[-60px] left-1/2 -translate-x-1/2 text-center">
-                  <span className="font-mono text-xs text-foreground font-bold tracking-wider">Technology Novelty</span>
-                </div>
-                <div className="absolute bottom-[-40px] left-0 text-xs text-muted-foreground">Existing Technology</div>
-                <div className="absolute bottom-[-40px] right-0 text-xs text-muted-foreground">New Technology</div>
-
-                {/* Grid */}
-                <div className="grid grid-cols-2 gap-4 ml-8">
-                  {/* Architectural - top left */}
+                <div className="grid grid-cols-2 gap-4 md:ml-8 mb-12">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -237,7 +342,6 @@ export default function PragatiPage() {
                     </div>
                   </motion.div>
 
-                  {/* Transformational - top right */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -252,7 +356,6 @@ export default function PragatiPage() {
                     </div>
                   </motion.div>
 
-                  {/* Core - bottom left */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -267,7 +370,6 @@ export default function PragatiPage() {
                     </div>
                   </motion.div>
 
-                  {/* Emerging - bottom right */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -304,7 +406,6 @@ export default function PragatiPage() {
               </p>
             </motion.div>
 
-            {/* Cluster Presets */}
             <div className="flex flex-wrap justify-center gap-3 mb-8">
               {clusterPresets.map((preset) => (
                 <button
@@ -321,7 +422,6 @@ export default function PragatiPage() {
               ))}
             </div>
 
-            {/* Restored Banner */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -335,7 +435,6 @@ export default function PragatiPage() {
               </div>
             </motion.div>
 
-            {/* Weight Sliders */}
             <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
               <div className="space-y-6">
                 {weights.map((category, index) => (
@@ -370,23 +469,19 @@ export default function PragatiPage() {
                   </motion.div>
                 ))}
                 
-                {/* Total */}
                 <div className="mt-6 p-4 rounded-xl bg-pragati/20 border border-pragati/30 flex items-center justify-between">
                   <span className="font-bold">Total Weight:</span>
                   <span className="text-2xl font-bold text-edifai">100%</span>
                 </div>
               </div>
 
-              {/* Radar Chart Placeholder */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 className="relative aspect-square rounded-2xl bg-background/5 border border-background/10 p-8 flex items-center justify-center"
               >
-                {/* Simplified radar visualization */}
                 <div className="relative w-full h-full">
-                  {/* Concentric circles */}
                   {[100, 75, 50, 25].map((size) => (
                     <div
                       key={size}
@@ -400,118 +495,209 @@ export default function PragatiPage() {
                     />
                   ))}
                   
-                  {/* Weight labels around the radar */}
-                  {weights.map((category, index) => {
-                    const angle = (index * 360) / weights.length - 90;
-                    const radian = (angle * Math.PI) / 180;
-                    const radius = 45;
-                    const x = 50 + radius * Math.cos(radian);
-                    const y = 50 + radius * Math.sin(radian);
-                    
-                    return (
-                      <div
-                        key={category.abbr}
-                        className="absolute text-xs font-mono"
-                        style={{
-                          left: `${x}%`,
-                          top: `${y}%`,
-                          transform: "translate(-50%, -50%)",
-                        }}
-                      >
-                        <span className="text-pragati font-bold">{category.weight}%</span>
-                        <br />
-                        <span className="text-background/50">{category.abbr}</span>
-                      </div>
-                    );
-                  })}
-
-                  {/* Center dot */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-pragati" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-pragati">78</div>
+                      <div className="text-sm text-background/50 font-mono">SCORE</div>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Score Interpretation */}
+        {/* Psychometric Analysis */}
         <section className="py-24 sm:py-32">
           <div className="container">
-            <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <span className="font-mono text-xs text-pragati tracking-wider uppercase">Psychometric Analysis</span>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-3 mb-4">
+                  Discover Your Innovator Profile
+                </h2>
+                <p className="text-muted-foreground mb-8">
+                  Take our quick psychometric assessment to discover your unique strengths, work style, and potential.
+                </p>
+                <a href="https://pragati.thevencorp.com" target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" className="rounded-full px-8 gap-2 bg-pragati hover:bg-pragati/90">
+                    Start The Assessment
+                    <ArrowRight size={18} />
+                  </Button>
+                </a>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative aspect-square rounded-2xl bg-gradient-to-br from-pragati/10 to-stello/10 border border-border/60 flex items-center justify-center"
+              >
+                <div className="text-center">
+                  <Brain size={64} className="text-pragati mx-auto mb-4" />
+                  <p className="text-muted-foreground text-sm">Interactive Assessment Preview</p>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Trusted By */}
+        <section className="py-12 border-y border-border/60">
+          <div className="container">
+            <p className="text-center font-mono text-xs text-muted-foreground tracking-wider uppercase mb-8">
+              Trusted By Leading Institutions
+            </p>
+            <div className="flex flex-wrap justify-center gap-8">
+              {trustedBy.map((name) => (
+                <span key={name} className="text-muted-foreground/60 font-medium hover:text-foreground transition-colors">
+                  {name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials */}
+        <section className="py-24 sm:py-32">
+          <div className="container">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-3xl mx-auto mb-16"
+            >
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-                The Pragati Standard
+                Trusted by the Next Generation of Leaders
               </h2>
               <p className="text-muted-foreground">
-                Your score determines your path through the ecosystem.
+                See how Pragati is transforming innovation across colleges and organizations worldwide
               </p>
-            </div>
+            </motion.div>
 
-            <div className="max-w-2xl mx-auto space-y-4">
-              {scoreRanges.map((range, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {testimonials.map((testimonial, index) => (
                 <motion.div
-                  key={range.label}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  key={testimonial.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className={`p-4 rounded-xl border border-border/60 ${range.bg}`}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bento-card"
                 >
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className={range.color}>{range.icon}</div>
-                    <span className="font-bold">{range.range}</span>
-                    <span className={`font-mono text-xs ${range.color}`}>({range.label})</span>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-pragati/10 text-pragati flex items-center justify-center font-bold">
+                      {testimonial.avatar}
+                    </div>
+                    <div>
+                      <h4 className="font-bold">{testimonial.name}</h4>
+                      <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                    </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    <strong>Diagnosis:</strong> {range.diagnosis}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    <strong>Action:</strong> {range.action}
-                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">"{testimonial.content}"</p>
+                  <div className="flex gap-1 mt-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={14} className="text-gine fill-gine" />
+                    ))}
+                  </div>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Ecosystem Bridge */}
-        <section className="py-24 sm:py-32 bg-foreground text-background">
+        {/* Score Ranges */}
+        <section className="py-24 sm:py-32 bg-muted/30">
           <div className="container">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">
-                What happens next?
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-3xl mx-auto mb-16"
+            >
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                What Your Score Means
               </h2>
-              <p className="text-background/70 mb-8">
-                Validation is just the beginning.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                <div className="p-6 rounded-xl border border-background/10 bg-background/5">
-                  <div className="flex items-center gap-2 mb-3">
-                    <CheckCircle size={18} className="text-pragati" />
-                    <span className="font-mono text-xs uppercase tracking-wider">If you score Green</span>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {scoreRanges.map((range, index) => (
+                <motion.div
+                  key={range.label}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className={`bento-card ${range.bg}`}
+                >
+                  <div className={`mb-4 ${range.color}`}>
+                    {range.icon}
                   </div>
-                  <p className="text-sm text-background/70">
-                    Your data automatically syncs to Stello to set up your company entity.
-                  </p>
-                </div>
-                <div className="p-6 rounded-xl border border-background/10 bg-background/5">
-                  <div className="flex items-center gap-2 mb-3">
-                    <AlertTriangle size={18} className="text-interllexia" />
-                    <span className="font-mono text-xs uppercase tracking-wider">If you score Orange</span>
-                  </div>
-                  <p className="text-sm text-background/70">
-                    Your weak points are sent to Edifai to generate a custom learning path for you.
-                  </p>
-                </div>
-              </div>
-              <Link to="/">
-                <Button variant="outline" className="mt-8 rounded-full text-foreground border-background/20 hover:bg-background/10">
-                  View the Full Ecosystem
-                </Button>
-              </Link>
+                  <div className="font-mono text-xs text-muted-foreground mb-1">{range.range}</div>
+                  <h3 className={`text-lg font-bold mb-2 ${range.color}`}>{range.label}</h3>
+                  <p className="text-sm text-muted-foreground mb-1">{range.diagnosis}</p>
+                  <p className="text-xs text-muted-foreground">{range.action}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
 
-        <Footer />
+        {/* CTA */}
+        <section className="py-24 sm:py-32">
+          <div className="container">
+            <div className="max-w-2xl mx-auto text-center">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+                Ready to Build the Future?
+              </h2>
+              <p className="text-muted-foreground mb-8">
+                Let's connect and launch the next big thing together.
+              </p>
+              <a href="https://pragati.thevencorp.com" target="_blank" rel="noopener noreferrer">
+                <Button size="lg" className="rounded-full px-8 gap-2 bg-pragati hover:bg-pragati/90">
+                  Get Started Now
+                  <ArrowRight size={18} />
+                </Button>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="py-12 border-t border-border/60">
+          <div className="container">
+            <div className="grid md:grid-cols-3 gap-8">
+              <div>
+                <h3 className="font-bold text-lg mb-2 text-pragati">Pragati</h3>
+                <p className="text-xs text-muted-foreground mb-2">A Vencorp Product</p>
+                <p className="text-sm text-muted-foreground">
+                  Transforming academic innovation into market reality through AI-powered validation and guidance.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-bold mb-4">Company</h4>
+                <ul className="space-y-2 text-sm">
+                  <li><a href="/" className="text-muted-foreground hover:text-foreground transition-colors">Vencorp</a></li>
+                  <li><a href="https://staciacorp.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">Stacia Corp</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-bold mb-4">Legal</h4>
+                <ul className="space-y-2 text-sm">
+                  <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a></li>
+                  <li><a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a></li>
+                </ul>
+              </div>
+            </div>
+            <div className="mt-12 pt-6 border-t border-border/60 text-center text-sm text-muted-foreground">
+              © 2025 Pragati by Vencorp a Unit of Stacia Corp
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
   );
