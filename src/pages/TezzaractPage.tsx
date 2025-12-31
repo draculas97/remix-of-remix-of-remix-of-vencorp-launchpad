@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Box, Palette, ShoppingBag, Sparkles, Users, TrendingUp } from "lucide-react";
+import { ArrowLeft, Box, Palette, ShoppingBag, Sparkles, Users, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
@@ -86,13 +86,17 @@ export default function TezzaractPage() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="rounded-full px-8 gap-2 bg-tezzaract hover:bg-tezzaract/90 text-foreground">
-                  <ShoppingBag size={18} />
-                  Explore Now
-                </Button>
-                <Button size="lg" variant="outline" className="rounded-full px-8 gap-2 border-background/20 text-background hover:bg-background/10">
-                  Join as Artist
-                </Button>
+                <a href="https://tezzaract.com" target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" className="rounded-full px-8 gap-2 bg-tezzaract hover:bg-tezzaract/90 text-foreground">
+                    <ShoppingBag size={18} />
+                    Explore Now
+                  </Button>
+                </a>
+                <a href="https://tezzaract.com" target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" variant="outline" className="rounded-full px-8 gap-2 border-background/20 text-background hover:bg-background/10">
+                    Join as Artist
+                  </Button>
+                </a>
               </div>
 
               {/* Stats */}
@@ -145,8 +149,11 @@ export default function TezzaractPage() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
               {categories.map((category, index) => (
-                <motion.div
+                <motion.a
                   key={category.name}
+                  href="https://tezzaract.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
@@ -155,7 +162,7 @@ export default function TezzaractPage() {
                 >
                   <h4 className="font-bold mb-1">{category.name}</h4>
                   <p className="font-mono text-sm text-tezzaract">{category.products} products</p>
-                </motion.div>
+                </motion.a>
               ))}
             </div>
           </div>
@@ -173,9 +180,12 @@ export default function TezzaractPage() {
                 Join us and earn lifetime revenue from your designs! Simply upload your 3D creations, 
                 and every time they sell, you get paid—again and again.
               </p>
-              <Button size="lg" className="rounded-full px-8 bg-tezzaract hover:bg-tezzaract/90 text-foreground">
-                Join as Artist
-              </Button>
+              <a href="https://tezzaract.com" target="_blank" rel="noopener noreferrer">
+                <Button size="lg" className="rounded-full px-8 gap-2 bg-tezzaract hover:bg-tezzaract/90 text-foreground">
+                  Join as Artist
+                  <ArrowRight size={18} />
+                </Button>
+              </a>
             </div>
           </div>
         </section>
