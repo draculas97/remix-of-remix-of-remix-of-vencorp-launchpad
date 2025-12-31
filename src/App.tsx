@@ -22,6 +22,7 @@ import DocumentationPage from "./pages/DocumentationPage";
 import ApiReferencePage from "./pages/ApiReferencePage";
 import StatusPage from "./pages/StatusPage";
 import SupportPage from "./pages/SupportPage";
+import BuiltByStaciaPage from "./pages/BuiltByStaciaPage";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ const App = () => (
             <Route path="/api-reference" element={<ApiReferencePage />} />
             <Route path="/status" element={<StatusPage />} />
             <Route path="/support" element={<SupportPage />} />
+            <Route path="/built-by-stacia" element={<BuiltByStaciaPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

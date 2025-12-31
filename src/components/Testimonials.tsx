@@ -1,6 +1,7 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useInView, useAnimationControls } from "framer-motion";
-import { Quote } from "lucide-react";
+import { Quote, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const testimonials = [
   {
@@ -45,26 +46,79 @@ const testimonials = [
     avatar: "AR",
     accentColor: "bg-primary/10 text-primary",
   },
+  {
+    quote: "Tezzaract's 3D marketplace transformed how we prototype. From CAD to product in record time.",
+    author: "Meera Singh",
+    role: "Product Lead, DesignLab",
+    avatar: "MS",
+    accentColor: "bg-tezzaract/10 text-tezzaract",
+  },
+  {
+    quote: "The Job Portal connected us with talent that understood startup culture. Our hiring time dropped 60%.",
+    author: "Karan Desai",
+    role: "HR Director, ScaleUp Inc",
+    avatar: "KD",
+    accentColor: "bg-jobportal/10 text-jobportal",
+  },
 ];
 
+// Split into two rows
+const row1 = testimonials.slice(0, 4);
+const row2 = testimonials.slice(4);
+
 // Duplicate for seamless loop
-const duplicatedTestimonials = [...testimonials, ...testimonials];
+const row1Duplicated = [...row1, ...row1, ...row1];
+const row2Duplicated = [...row2, ...row2, ...row2];
 
-export default function Testimonials() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [isPaused, setIsPaused] = useState(false);
+const TestimonialCard = ({ testimonial, index }: { testimonial: typeof testimonials[0]; index: number }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3) }}
+    whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+    className="bento-card group w-[320px] sm:w-[350px] flex-shrink-0"
+  >
+    <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl mb-4 ${testimonial.accentColor} transition-transform group-hover:scale-110`}>
+      <Quote size={18} />
+    </div>
+    <p className="text-foreground/90 leading-relaxed mb-6 text-sm">
+      "{testimonial.quote}"
+    </p>
+    <div className="flex items-center gap-3 pt-4 border-t border-border/40">
+      <div className={`flex h-10 w-10 items-center justify-center rounded-full font-mono text-xs font-bold ${testimonial.accentColor} transition-transform group-hover:scale-110`}>
+        {testimonial.avatar}
+      </div>
+      <div>
+        <div className="font-medium text-sm">{testimonial.author}</div>
+        <div className="font-mono text-xs text-muted-foreground">{testimonial.role}</div>
+      </div>
+    </div>
+  </motion.div>
+);
+
+interface MarqueeRowProps {
+  items: typeof testimonials;
+  direction: "left" | "right";
+  isPaused: boolean;
+  speed?: number;
+}
+
+const MarqueeRow = ({ items, direction, isPaused, speed = 40 }: MarqueeRowProps) => {
   const controls = useAnimationControls();
-
+  const containerRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
+    const totalWidth = items.length * 370; // Approximate card width + gap
+    const duration = totalWidth / speed;
+    
     if (!isPaused) {
       controls.start({
-        x: [0, -50 * testimonials.length + "%"],
+        x: direction === "left" ? [0, -totalWidth / 3] : [-totalWidth / 3, 0],
         transition: {
           x: {
             repeat: Infinity,
             repeatType: "loop",
-            duration: 30,
+            duration: duration,
             ease: "linear",
           },
         },
@@ -72,7 +126,37 @@ export default function Testimonials() {
     } else {
       controls.stop();
     }
-  }, [isPaused, controls]);
+  }, [isPaused, controls, items.length, direction, speed]);
+
+  return (
+    <motion.div
+      ref={containerRef}
+      animate={controls}
+      className="flex gap-6"
+      style={{ width: "fit-content" }}
+    >
+      {items.map((testimonial, index) => (
+        <TestimonialCard key={`${testimonial.author}-${index}`} testimonial={testimonial} index={index} />
+      ))}
+    </motion.div>
+  );
+};
+
+export default function Testimonials() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [isPaused, setIsPaused] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = useCallback((direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 380;
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  }, []);
 
   return (
     <section ref={ref} id="testimonials" className="py-24 sm:py-32 overflow-hidden">
@@ -82,68 +166,76 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12"
         >
-          <span className="font-mono text-xs text-muted-foreground tracking-wider uppercase">
-            Testimonials
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-3 mb-4">
-            Trusted by Innovators
-          </h2>
-          <p className="text-muted-foreground">
-            Founders and investors building the future with the Vencorp ecosystem.
-          </p>
+          <div>
+            <span className="font-mono text-xs text-muted-foreground tracking-wider uppercase">
+              Testimonials
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mt-3 mb-2">
+              Trusted by Innovators
+            </h2>
+            <p className="text-muted-foreground max-w-lg">
+              Founders and investors building the future with the Vencorp ecosystem.
+            </p>
+          </div>
+          
+          {/* Controls */}
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full h-10 w-10"
+              onClick={() => setIsPaused(!isPaused)}
+            >
+              {isPaused ? <Play size={16} /> : <Pause size={16} />}
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full h-10 w-10"
+              onClick={() => scroll("left")}
+            >
+              <ChevronLeft size={16} />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full h-10 w-10"
+              onClick={() => scroll("right")}
+            >
+              <ChevronRight size={16} />
+            </Button>
+          </div>
         </motion.div>
       </div>
 
-      {/* Marquee container */}
+      {/* Row 1 - Marquee */}
+      <div 
+        className="relative mb-6"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        
+        <div className="px-6 overflow-hidden">
+          <MarqueeRow items={row1Duplicated} direction="left" isPaused={isPaused} speed={35} />
+        </div>
+      </div>
+
+      {/* Row 2 - Marquee (opposite direction) */}
       <div 
         className="relative"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        {/* Gradient overlays */}
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-
-        {/* Scrolling content */}
-        <motion.div
-          animate={controls}
-          className="flex gap-6 px-6"
-          style={{ width: "fit-content" }}
-        >
-          {duplicatedTestimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3) }}
-              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-              className="bento-card group w-[350px] flex-shrink-0"
-            >
-              {/* Quote icon */}
-              <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl mb-4 ${testimonial.accentColor} transition-transform group-hover:scale-110`}>
-                <Quote size={18} />
-              </div>
-
-              {/* Quote text */}
-              <p className="text-foreground/90 leading-relaxed mb-6">
-                "{testimonial.quote}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3 pt-4 border-t border-border/40">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-full font-mono text-xs font-bold ${testimonial.accentColor} transition-transform group-hover:scale-110`}>
-                  {testimonial.avatar}
-                </div>
-                <div>
-                  <div className="font-medium text-sm">{testimonial.author}</div>
-                  <div className="font-mono text-xs text-muted-foreground">{testimonial.role}</div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+        
+        <div ref={scrollContainerRef} className="px-6 overflow-hidden">
+          <MarqueeRow items={row2Duplicated} direction="right" isPaused={isPaused} speed={30} />
+        </div>
       </div>
     </section>
   );
